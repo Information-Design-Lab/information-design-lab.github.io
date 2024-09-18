@@ -2,10 +2,8 @@
 	import { base } from '$app/paths';
 	import DataProject from '$lib/components/DataProject.svelte';
 	import ExperienceProject from '$lib/components/ExperienceProject.svelte';
-	import { goto } from '$app/navigation';
 	const { data } = $props();
 
-	$inspect(data);
 	const sortedProjects = $derived(
 		data.gruppo.progetti.sort((a, b) => {
 			if (a.modulo < b.modulo) return -1;
@@ -13,10 +11,6 @@
 			return 0;
 		})
 	);
-
-	const navigateToGroup = (slug) => {
-		goto(`${base}/gruppi/${slug}`);
-	};
 
 	let currentIndex = $state(-1);
 	$effect(() => {
@@ -91,13 +85,13 @@
 		<div class="row justify-content-between">
 			{#if data.gruppo.prev}
 				<div class="col-auto d-flex align-items-center">
-					<button
+					<a
+						href="{base}/gruppi/{data.gruppo.prev.slug.current}"
 						class="btn rounded-pill d-flex align-items-center justify-content-center hover-effect"
 						style="--corso-color: #{data.gruppo.corso.colore}; width: 40px; height: 40px;"
-						onclick={() => navigateToGroup(data.gruppo.prev.slug.current)}
 					>
 						<i class="bi bi-arrow-left text-white"></i>
-					</button>
+					</a>
 					<span class="ms-3 fs-5 text-uppercase">Precedente</span>
 				</div>
 			{/if}
@@ -105,13 +99,13 @@
 				{#if data.gruppo.next}
 					<span class="me-3 fs-5 text-uppercase">Successivo</span>
 
-					<button
+					<a
+						href="{base}/gruppi/{data.gruppo.next.slug.current}"
 						class="btn rounded-pill d-flex align-items-center justify-content-center hover-effect"
 						style="--corso-color: #{data.gruppo.corso.colore}; width: 40px; height: 40px;"
-						onclick={() => navigateToGroup(data.gruppo.next.slug.current)}
 					>
 						<i class="bi bi-arrow-right text-white"></i>
-					</button>
+					</a>
 				{/if}
 			</div>
 		</div>
