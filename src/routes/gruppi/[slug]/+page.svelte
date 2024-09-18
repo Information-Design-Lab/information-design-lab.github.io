@@ -5,6 +5,7 @@
 	import { goto } from '$app/navigation';
 	const { data } = $props();
 
+	$inspect(data);
 	const sortedProjects = $derived(
 		data.gruppo.progetti.sort((a, b) => {
 			if (a.modulo < b.modulo) return -1;
@@ -24,12 +25,13 @@
 		);
 	});
 
-	const prevIndex = $derived(currentIndex > 0 ? currentIndex - 1 : data.gruppo.gruppi.length - 1);
+	const prevIndex = $derived(
+		currentIndex > 0 ? currentIndex - 1 : data?.gruppo?.gruppi?.length - 1
+	);
 
-	const nextIndex = $derived(currentIndex < data.gruppo.gruppi.length - 1 ? currentIndex + 1 : 0);
-
-	const prevGroup = $derived(data.gruppo.gruppi[prevIndex]);
-	const nextGroup = $derived(data.gruppo.gruppi[nextIndex]);
+	const nextIndex = $derived(
+		currentIndex < data?.gruppo?.gruppi?.length - 1 ? currentIndex + 1 : 0
+	);
 </script>
 
 {#if data.gruppo}
