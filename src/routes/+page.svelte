@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	const page = $props();
 	const corsi = $derived(page.data.corsi);
 </script>
@@ -52,7 +53,7 @@
 		>
 			<div class="col-12">
 				<h1 class="d-flex align-items-center gap-3">
-					<a href={`corsi/${corso.slug.current}`} class="text-decoration-none text-white">
+					<a href="{base}/corsi/{corso.slug.current}" class="text-decoration-none text-white">
 						<span class="fw-normal">{corso.titolo}</span>
 					</a>
 					<span

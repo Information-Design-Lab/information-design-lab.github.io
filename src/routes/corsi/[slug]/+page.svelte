@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	const { data } = $props();
 </script>
 
@@ -33,7 +34,7 @@
 							class:border-top={index !== 0}
 							class:border-bottom={index !== data.corso.gruppi.length - 1}
 						>
-							<a href={`/gruppi/${gruppo.slug.current}`} class="text-decoration-none text-white">
+							<a href="{base}/gruppi/{gruppo.slug.current}" class="text-decoration-none text-white">
 								<h1 class="fw-normal text-uppercase">{gruppo.nome}</h1>
 							</a>
 						</div>

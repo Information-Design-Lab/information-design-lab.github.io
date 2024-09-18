@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	import DataProject from '$lib/components/DataProject.svelte';
 	import ExperienceProject from '$lib/components/ExperienceProject.svelte';
 	import { goto } from '$app/navigation';
@@ -13,8 +14,22 @@
 	);
 
 	const navigateToGroup = (slug) => {
-		goto(`/gruppi/${slug}`);
+		goto(`${base}/gruppi/${slug}`);
 	};
+
+	let currentIndex = $state(-1);
+	$effect(() => {
+		currentIndex = data?.gruppo?.gruppi?.findIndex(
+			(g) => g.slug.current === data?.gruppo?.slug?.current
+		);
+	});
+
+	const prevIndex = $derived(currentIndex > 0 ? currentIndex - 1 : data.gruppo.gruppi.length - 1);
+
+	const nextIndex = $derived(currentIndex < data.gruppo.gruppi.length - 1 ? currentIndex + 1 : 0);
+
+	const prevGroup = $derived(data.gruppo.gruppi[prevIndex]);
+	const nextGroup = $derived(data.gruppo.gruppi[nextIndex]);
 </script>
 
 {#if data.gruppo}
@@ -23,7 +38,7 @@
 			<div class="col-md-12 border-bottom border-white py-2">
 				<h1 class="d-flex align-items-center gap-3">
 					<a
-						href={`/corsi/${data.gruppo.corso.slug.current}`}
+						href="{base}/corsi/{data.gruppo.corso.slug.current}"
 						class="text-decoration-none text-white"
 					>
 						<span class="fw-normal">{data.gruppo.corso.titolo}</span>
