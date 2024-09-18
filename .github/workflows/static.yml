@@ -29,7 +29,7 @@ jobs:
         env:
           PUBLIC_BASE_PATH: ${{ secrets.PUBLIC_BASE_PATH }}
           PUBLIC_SANITY_PROJECT_ID: ${{ secrets.PUBLIC_SANITY_PROJECT_ID }}
-          PUBLIC_SANITY_DATASET: ${{ secrets.PUBLIC_SANITY_DATASET }}'
+          PUBLIC_SANITY_DATASET: ${{ secrets.PUBLIC_SANITY_DATASET }}
         run: |
           pnpm run build
 
