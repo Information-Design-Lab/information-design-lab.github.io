@@ -8,7 +8,12 @@ const config = {
 			pages: 'build',
 			assets: 'build',
 			precompress: false,
-			strict: true
+			strict: true,
+			prerender: {
+				default: true
+			},
+			crawl: true,
+			entries: ['/']
 		}),
 		paths: {
 			base: process.argv.includes('dev') ? '' : process.env.PUBLIC_BASE_PATH
