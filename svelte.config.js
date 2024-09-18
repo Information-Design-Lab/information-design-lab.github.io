@@ -12,8 +12,7 @@ const config = {
 			prerender: {
 				default: true
 			},
-			crawl: true,
-			entries: ['/']
+			crawl: true
 		}),
 		paths: {
 			base: process.argv.includes('dev') ? '' : process.env.PUBLIC_BASE_PATH
