@@ -1,7 +1,7 @@
 import { client } from '$lib/sanityClient';
 import { getCorsoBySlug } from '$lib/sanityQueries';
 import { json, error } from '@sveltejs/kit';
-export const prerender = true;
+export const prerender = 'auto';
 export async function GET({ params }) {
     const { slug } = params;
 
