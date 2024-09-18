@@ -1,7 +1,7 @@
 import { error, json } from '@sveltejs/kit';
 import { client } from '$lib/sanityClient';
 import { getGruppi } from '$lib/sanityQueries';
-
+export const prerender = true;
 export async function GET({ params }) {
     const { slug } = params;
 
