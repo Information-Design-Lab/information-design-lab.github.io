@@ -1,7 +1,6 @@
 <script>
 	const page = $props();
 	const corsi = $derived(page.data.corsi);
-	$inspect(corsi);
 </script>
 
 <div class="container-fluid mt-2">

@@ -1,11 +1,5 @@
 <script>
-	import { getColor } from '$lib/stores/colorStore.svelte.js';
 	const { data } = $props();
-	const color = getColor();
-
-	$effect(() => {
-		color.setColor(data.corso.colore);
-	});
 </script>
 
 {#if data.corso}

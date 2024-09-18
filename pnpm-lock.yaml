@@ -23,6 +23,9 @@ importers:
       bootstrap-icons:
         specifier: ^1.11.3
         version: 1.11.3
+      hammerjs:
+        specifier: ^2.0.8
+        version: 2.0.8
       sass:
         specifier: ^1.78.0
         version: 1.78.0
@@ -30,6 +33,9 @@ importers:
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
         version: 3.2.4(@sveltejs/kit@2.5.27(@sveltejs/vite-plugin-svelte@4.0.0-next.7(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0)))(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0)))
+      '@sveltejs/adapter-static':
+        specifier: ^3.0.5
+        version: 3.0.5(@sveltejs/kit@2.5.27(@sveltejs/vite-plugin-svelte@4.0.0-next.7(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0)))(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0)))
       '@sveltejs/kit':
         specifier: ^2.0.0
         version: 2.5.27(@sveltejs/vite-plugin-svelte@4.0.0-next.7(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0)))(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0))
@@ -317,6 +323,11 @@ packages:
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
 
+  '@sveltejs/adapter-static@3.0.5':
+    resolution: {integrity: sha512-kFJR7RxeB6FBvrKZWAEzIALatgy11ISaaZbcPup8JdWUdrmmfUHHTJ738YHJTEfnCiiXi6aX8Q6ePY7tnSMD6Q==}
+    peerDependencies:
+      '@sveltejs/kit': ^2.0.0
+
   '@sveltejs/kit@2.5.27':
     resolution: {integrity: sha512-CcbRTzl+65oWljAASL6UlxM4x3NWwd0fjq5fQOfP243vs50myFQ8lil0fr3Im6HeeQqYUCtnv8HjO8REWVPjTw==}
     engines: {node: '>=18.13'}
@@ -480,6 +491,10 @@ packages:
 
   globrex@0.1.2:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
+
+  hammerjs@2.0.8:
+    resolution: {integrity: sha512-tSQXBXS/MWQOn/RKckawJ61vvsDpCom87JgxiYdGwHdOa0ht0vzUWDlfioofFCRU0L+6NGDt6XzbgoJvZkMeRQ==}
+    engines: {node: '>=0.8.0'}
 
   immutable@4.3.7:
     resolution: {integrity: sha512-1hqclzwYwjRDFLjcFxOM5AYkkG0rpFPpr1RLPMEuGczoS7YA8gLhy8SWXYRAA/XwfEHpfo3cw5JGioS32fnMRw==}
@@ -870,6 +885,10 @@ snapshots:
       '@sveltejs/kit': 2.5.27(@sveltejs/vite-plugin-svelte@4.0.0-next.7(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0)))(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0))
       import-meta-resolve: 4.1.0
 
+  '@sveltejs/adapter-static@3.0.5(@sveltejs/kit@2.5.27(@sveltejs/vite-plugin-svelte@4.0.0-next.7(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0)))(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0)))':
+    dependencies:
+      '@sveltejs/kit': 2.5.27(@sveltejs/vite-plugin-svelte@4.0.0-next.7(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0)))(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0))
+
   '@sveltejs/kit@2.5.27(@sveltejs/vite-plugin-svelte@4.0.0-next.7(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0)))(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0))':
     dependencies:
       '@sveltejs/vite-plugin-svelte': 4.0.0-next.7(svelte@5.0.0-next.246)(vite@5.4.5(@types/node@22.5.5)(sass@1.78.0))
@@ -1050,6 +1069,8 @@ snapshots:
   globalyzer@0.1.0: {}
 
   globrex@0.1.2: {}
+
+  hammerjs@2.0.8: {}
 
   immutable@4.3.7: {}
 

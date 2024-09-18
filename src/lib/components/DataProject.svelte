@@ -3,10 +3,13 @@
 	import ProjectDetails from './ProjectDetails.svelte';
 	import ImageGallery from './ImageGallery.svelte';
 	import { urlFor } from '$lib/sanityClient';
+	import { browser } from '$app/environment';
 	const { project, corsoColor } = $props();
 	let showModal = $state(false);
 	let currentMediaIndex = $state(0);
 	let isVideo = $state(false);
+	let modalContent = $state(null);
+	let Hammer;
 
 	function handleViewProject() {
 		if (project.video) {
@@ -19,6 +22,7 @@
 	}
 
 	function handleImageClick(index) {
+		//console.log('handleImageClick');
 		showModal = true;
 		isVideo = false;
 		currentMediaIndex = index;
@@ -29,6 +33,7 @@
 	}
 
 	function nextMedia() {
+		//console.log('nextMedia');
 		if (isVideo) return;
 		if (currentMediaIndex < project.immagini.length - 1) {
 			currentMediaIndex++;
@@ -36,11 +41,40 @@
 	}
 
 	function prevMedia() {
+		//console.log('prevMedia');
 		if (isVideo) return;
 		if (currentMediaIndex > 0) {
 			currentMediaIndex--;
 		}
 	}
+
+	function handleOutsideClick(event) {
+		if (event.target.classList.contains('modal-backdrop')) {
+			closeModal();
+		}
+	}
+
+	$effect(async () => {
+		if (browser) {
+			Hammer = (await import('hammerjs')).default;
+		}
+	});
+
+	$effect(() => {
+		//console.log(browser, showModal, !isVideo, modalContent, Hammer, 'check');
+		if (browser && showModal && !isVideo && modalContent && Hammer) {
+			const hammer = new Hammer(modalContent);
+			//console.log('Hammer initialized');
+			hammer.on('swipeleft', nextMedia);
+			hammer.on('swiperight', prevMedia);
+
+			return () => {
+				hammer.off('swipeleft');
+				hammer.off('swiperight');
+				hammer.destroy();
+			};
+		}
+	});
 </script>
 
 {#if project}
@@ -70,7 +104,9 @@
 	</div>
 
 	{#if showModal}
-		<div class="modal" style="display: block;">
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<div class="modal" style="display: block;" onclick={handleOutsideClick}>
 			<div
 				class="modal-backdrop fade show"
 				style="opacity: 0.5; background-color: #{corsoColor};"
@@ -86,7 +122,7 @@
 									class="btn d-flex me-2 align-items-center justify-content-center hover-effect bg-black text-white"
 									style="--corso-color: #{corsoColor}; width: 40px; height: 40px; border-radius: 50%;"
 									onclick={prevMedia}
-									disabled={currentMediaIndex === 0}
+									class:opacity-0={currentMediaIndex === 0}
 								>
 									<i class="bi bi-arrow-left"></i>
 								</button>
@@ -94,7 +130,7 @@
 									class="btn d-flex align-items-center justify-content-center hover-effect bg-black text-white"
 									style="--corso-color: #{corsoColor}; width: 40px; height: 40px; border-radius: 50%;"
 									onclick={nextMedia}
-									disabled={currentMediaIndex === project.immagini.length - 1}
+									class:opacity-0={currentMediaIndex === project.immagini.length - 1}
 								>
 									<i class="bi bi-arrow-right"></i>
 								</button>
@@ -109,7 +145,7 @@
 							Chiudi
 						</button>
 					</div>
-					<div class="modal-body position-relative bg-black">
+					<div class="modal-body position-relative bg-black" bind:this={modalContent}>
 						<!-- svelte-ignore legacy_code -->
 						{#if isVideo && project.video}
 							<!-- svelte-ignore a11y_media_has_caption -->
@@ -118,11 +154,21 @@
 								Your browser does not support the video tag.
 							</video>
 						{:else if project.immagini && project.immagini.length > 0}
-							<img
-								src={urlFor(project.immagini[currentMediaIndex]).url()}
-								alt={`Project image ${currentMediaIndex + 1}`}
-								style="width: 100%; height: auto;"
-							/>
+							<div class="swipable-container" style="overflow: hidden;">
+								<div
+									class="swipable-content"
+									style="display: flex; transition: transform 0.3s ease; transform: translateX(-{currentMediaIndex *
+										100}%);"
+								>
+									{#each project.immagini as image, index}
+										<img
+											src={urlFor(image).url()}
+											alt={`Project image ${index + 1}`}
+											style="width: 100%; height: auto; flex-shrink: 0;"
+										/>
+									{/each}
+								</div>
+							</div>
 						{/if}
 					</div>
 				</div>

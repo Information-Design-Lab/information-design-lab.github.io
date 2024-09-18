@@ -1,9 +1,26 @@
 <script>
 	import { urlFor } from '$lib/sanityClient.js';
+	import { browser } from '$app/environment';
 	import { slide } from 'svelte/transition';
+	import { cubicInOut } from 'svelte/easing';
+
+	let isMobile = $state(false);
+
+	$effect(() => {
+		if (browser) {
+			const checkMobile = () => {
+				isMobile = window.innerWidth <= 768;
+			};
+			checkMobile();
+			window.addEventListener('resize', checkMobile);
+			return () => window.removeEventListener('resize', checkMobile);
+		}
+	});
 
 	const { images, onImageClick, color } = $props();
 	let currentIndex = $state(0);
+	let startX;
+	let imageGallery;
 
 	const nextImage = () => {
 		if (currentIndex < images.length - 1) {
@@ -22,15 +39,65 @@
 			onImageClick(index);
 		}
 	};
+
+	const handleTouchStart = (e) => {
+		startX = e.touches[0].clientX;
+	};
+
+	const handleTouchMove = (e) => {
+		if (!startX) return;
+
+		const currentX = e.touches[0].clientX;
+		const diff = startX - currentX;
+
+		if (Math.abs(diff) > 50) {
+			// Threshold for swipe
+			if (diff > 0) {
+				nextImage();
+			} else {
+				prevImage();
+			}
+			startX = null;
+		}
+	};
+
+	const handleTouchEnd = () => {
+		startX = null;
+	};
+
+	$effect(() => {
+		if (imageGallery) {
+			imageGallery.addEventListener('touchstart', handleTouchStart, { passive: true });
+			imageGallery.addEventListener('touchmove', handleTouchMove, { passive: true });
+			imageGallery.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+			return () => {
+				imageGallery.removeEventListener('touchstart', handleTouchStart);
+				imageGallery.removeEventListener('touchmove', handleTouchMove);
+				imageGallery.removeEventListener('touchend', handleTouchEnd);
+			};
+		}
+	});
 </script>
 
-<div class="image-gallery position-relative">
+<div class="image-gallery position-relative" bind:this={imageGallery}>
 	{#if images && images.length > 0}
-		<div class="image-container" style="transform: translateX(-{currentIndex * 65}%)">
+		<div
+			class="image-container"
+			style="transform: translateX(-{currentIndex * (isMobile ? 100 : 65)}%)"
+		>
 			{#each images as image, index}
-				<!-- svelte-ignore a11y_click_events_have_key_events -->
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<div class="image-wrapper" onclick={() => handleImageClick(index)}>
+				<div
+					class="image-wrapper"
+					style="width: {isMobile ? '100%' : '65%'};"
+					onclick={() => handleImageClick(index)}
+					onkeypress={(e) => {
+						if (e.key === 'Enter' || e.key === ' ') {
+							handleImageClick(index);
+						}
+					}}
+				>
 					<img src={urlFor(image).url()} alt={`project image ${index + 1}`} class="gallery-image" />
 				</div>
 			{/each}
@@ -63,6 +130,7 @@
 		height: 550px;
 		overflow: hidden;
 		position: relative;
+		touch-action: pan-y;
 	}
 
 	.image-container {
@@ -72,7 +140,7 @@
 	}
 
 	.image-wrapper {
-		flex: 0 0 65%;
+		flex: 0 0 auto;
 		height: 100%;
 		padding: 0 5px;
 	}

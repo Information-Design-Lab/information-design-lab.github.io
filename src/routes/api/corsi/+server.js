@@ -12,6 +12,5 @@ export async function GET({ params, setHeaders, fetch }) {
     if (!data) {
         throw error(500, 'Database connection problem');
     }
-    console.log(data.results);
     return json(data.results);
 }
