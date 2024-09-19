@@ -37,7 +37,7 @@
 						href="{base}/corsi/{data.gruppo.corso.slug.current}"
 						class="text-decoration-none text-white"
 					>
-						<span class="fw-normal">{data.gruppo.corso.titolo}</span>
+						<span class="fw-normal text-uppercase">{data.gruppo.corso.titolo}</span>
 					</a>
 					<span
 						class="badge rounded-pill text-white border border-white fs-6 mt-2"

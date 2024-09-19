@@ -1,23 +1,46 @@
 <script>
 	import { base } from '$app/paths';
+	import { createSquareAtMouse } from '$lib/cursorEffect.js';
+
 	const page = $props();
 	const corsi = $derived(page.data.corsi);
+
+	let firstContainer;
+
+	$effect(() => {
+		if (!firstContainer) return;
+
+		const handleMouseMove = (event) => {
+			const rect = firstContainer.getBoundingClientRect();
+			const x = event.clientX - rect.left;
+			const y = event.clientY - rect.top;
+			if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+				createSquareAtMouse(event.clientX, event.clientY);
+			}
+		};
+
+		firstContainer.addEventListener('mousemove', handleMouseMove);
+
+		return () => {
+			firstContainer.removeEventListener('mousemove', handleMouseMove);
+		};
+	});
 </script>
 
-<div class="container-fluid mt-2">
+<div class="container-fluid mt-2" bind:this={firstContainer}>
 	<div class="row justify-content-between">
 		<div class="col-md-7 col-sm-12">
 			<p class="fw-semibold fs-3">
-				Il laboratorio di Information Design, sviluppato su due moduli integrati, ha l’obiettivo di
+				Il laboratorio di Information Design, sviluppato su due moduli integrati, ha l'obiettivo di
 				introdurre gli studenti alla progettazione di artefatti comunicativi che hanno lo scopo di
 				veicolare temi e informazioni complesse e offrire una visione ampia sul valore, sulle
 				potenzialità e i limiti dei dati. Gli studenti, organizzati in gruppi di lavoro, partiranno
-				dalla selezione di un tema di ricerca che svilupperanno tramite la selezione e l’analisi
+				dalla selezione di un tema di ricerca che svilupperanno tramite la selezione e l'analisi
 				visuale di set di dati che ne rappresentano alcune dimensioni. Dopo una prima fase di
 				analisi, gli studenti dovranno sviluppare un progetto composto da tre elementi: una
 				pubblicazione digitale in grado di presentare il tema e i dati analizzati;
-				un’installazione/campagna di comunicazione capace di riportare l’esperienza digitale in uno
-				spazio fisico; un video che racconta l’intera esperienza in tutte le sue fasi significative.
+				un'installazione/campagna di comunicazione capace di riportare l'esperienza digitale in uno
+				spazio fisico; un video che racconta l'intera esperienza in tutte le sue fasi significative.
 			</p>
 		</div>
 		<div class="col-md-4 col-sm-12 mt-2">
@@ -54,7 +77,7 @@
 			<div class="col-12">
 				<h1 class="d-flex align-items-center gap-3">
 					<a href="{base}/corsi/{corso.slug.current}" class="text-decoration-none text-white">
-						<span class="fw-normal">{corso.titolo}</span>
+						<span class="fw-normal text-uppercase">{corso.titolo}</span>
 					</a>
 					<span
 						class="badge rounded-pill text-white border border-white fs-6 mt-2"

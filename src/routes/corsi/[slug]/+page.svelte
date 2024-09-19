@@ -8,7 +8,7 @@
 		<div class="row">
 			<div class="col-md-12 border-bottom border-white py-2">
 				<h1 class="d-flex align-items-center gap-3">
-					<span class="fw-normal">{data.corso.titolo}</span>
+					<span class="fw-normal text-uppercase">{data.corso.titolo}</span>
 					<span
 						class="badge rounded-pill text-white border border-white fs-6 mt-2"
 						style="background-color: {'#' + data.corso.colore}">{data.corso.anno}</span
@@ -35,7 +35,7 @@
 							class:border-bottom={index !== data.corso.gruppi.length - 1}
 						>
 							<a href="{base}/gruppi/{gruppo.slug.current}" class="text-decoration-none text-white">
-								<h1 class="fw-normal text-uppercase">{gruppo.nome}</h1>
+								<h1 class="fw-normal text-uppercase" style="font-size: 4rem;">{gruppo.nome}</h1>
 							</a>
 						</div>
 					{/each}

@@ -4,6 +4,9 @@
 	import ImageGallery from './ImageGallery.svelte';
 	import { urlFor } from '$lib/sanityClient';
 	import { browser } from '$app/environment';
+	import { slide } from 'svelte/transition';
+	import { cubicInOut } from 'svelte/easing';
+
 	const { project, corsoColor } = $props();
 	let showModal = $state(false);
 	let currentMediaIndex = $state(0);
@@ -22,7 +25,6 @@
 	}
 
 	function handleImageClick(index) {
-		//console.log('handleImageClick');
 		showModal = true;
 		isVideo = false;
 		currentMediaIndex = index;
@@ -33,7 +35,6 @@
 	}
 
 	function nextMedia() {
-		//console.log('nextMedia');
 		if (isVideo) return;
 		if (currentMediaIndex < project.immagini.length - 1) {
 			currentMediaIndex++;
@@ -41,7 +42,6 @@
 	}
 
 	function prevMedia() {
-		//console.log('prevMedia');
 		if (isVideo) return;
 		if (currentMediaIndex > 0) {
 			currentMediaIndex--;
@@ -61,10 +61,8 @@
 	});
 
 	$effect(() => {
-		//console.log(browser, showModal, !isVideo, modalContent, Hammer, 'check');
 		if (browser && showModal && !isVideo && modalContent && Hammer) {
 			const hammer = new Hammer(modalContent);
-			//console.log('Hammer initialized');
 			hammer.on('swipeleft', nextMedia);
 			hammer.on('swiperight', prevMedia);
 
@@ -106,36 +104,14 @@
 	{#if showModal}
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore a11y_no_static_element_interactions -->
-		<div class="modal" style="display: block;" onclick={handleOutsideClick}>
+		<div class="modal modal-xl" style="display: block" onclick={handleOutsideClick}>
 			<div
 				class="modal-backdrop fade show"
 				style="opacity: 0.5; background-color: #{corsoColor};"
 			></div>
-			<div class="modal-dialog modal-lg" style="z-index: 1050;">
-				<div class="modal-content bg-transparent border-0">
-					<div
-						class="modal-header bg-transparent d-flex justify-content-between align-items-center border-0"
-					>
-						<div class="d-flex">
-							{#if !isVideo && project.immagini && project.immagini.length > 1}
-								<button
-									class="btn d-flex me-2 align-items-center justify-content-center hover-effect bg-black text-white"
-									style="--corso-color: #{corsoColor}; width: 40px; height: 40px; border-radius: 50%;"
-									onclick={prevMedia}
-									class:opacity-0={currentMediaIndex === 0}
-								>
-									<i class="bi bi-arrow-left"></i>
-								</button>
-								<button
-									class="btn d-flex align-items-center justify-content-center hover-effect bg-black text-white"
-									style="--corso-color: #{corsoColor}; width: 40px; height: 40px; border-radius: 50%;"
-									onclick={nextMedia}
-									class:opacity-0={currentMediaIndex === project.immagini.length - 1}
-								>
-									<i class="bi bi-arrow-right"></i>
-								</button>
-							{/if}
-						</div>
+			<div class="modal-dialog modal-dialog-centered" style="z-index: 1050;">
+				<div class="modal-content">
+					<div class="modal-header d-flex justify-content-center align-items-center border-0">
 						<button
 							type="button"
 							class="btn px-3 py-2 rounded-pill border-0 hover-effect bg-black text-white"
@@ -145,30 +121,61 @@
 							Chiudi
 						</button>
 					</div>
-					<div class="modal-body position-relative bg-black" bind:this={modalContent}>
+					<div
+						class="modal-body d-flex align-items-center justify-content-center p-0 position-relative"
+						bind:this={modalContent}
+					>
 						<!-- svelte-ignore legacy_code -->
 						{#if isVideo && project.video}
 							<!-- svelte-ignore a11y_media_has_caption -->
-							<video autoplay controls width="100%">
+							<video
+								autoplay
+								controls
+								style="max-width: 100%; max-height: calc(100vh - 200px); object-fit: contain;"
+							>
 								<source src={getVideoUrl(project.video)} type="video/mp4" />
 								Your browser does not support the video tag.
 							</video>
 						{:else if project.immagini && project.immagini.length > 0}
-							<div class="swipable-container" style="overflow: hidden;">
-								<div
-									class="swipable-content"
-									style="display: flex; transition: transform 0.3s ease; transform: translateX(-{currentMediaIndex *
-										100}%);"
-								>
-									{#each project.immagini as image, index}
-										<img
-											src={urlFor(image).url()}
-											alt={`Project image ${index + 1}`}
-											style="width: 100%; height: auto; flex-shrink: 0;"
-										/>
-									{/each}
-								</div>
+							<div
+								class="image-container"
+								style="width: 100%; height: calc(100vh - 200px); position: relative; overflow: hidden;"
+							>
+								{#each project.immagini as image, index}
+									{#if Math.abs(index - currentMediaIndex) <= 1}
+										<div
+											in:slide={{ duration: 300, easing: cubicInOut }}
+											out:slide={{ duration: 300, easing: cubicInOut }}
+											style="position: absolute; top: 0; left: {(index - currentMediaIndex) *
+												100}%; width: 100%; height: 100%; transition: left 0.3s ease;"
+										>
+											<img
+												src={urlFor(image).url()}
+												alt={`Project image ${index + 1}`}
+												style="width: 100%; height: 100%; object-fit: contain; object-position: top;"
+											/>
+										</div>
+									{/if}
+								{/each}
 							</div>
+							{#if !isVideo && project.immagini && project.immagini.length > 1}
+								<button
+									class="btn d-none d-md-flex align-items-center justify-content-center hover-effect bg-black text-white position-absolute"
+									style="--corso-color: #{corsoColor}; width: 60px; height: 60px; border-radius: 50%; left: 10px; top: 50%; transform: translateY(-50%);"
+									onclick={prevMedia}
+									class:opacity-0={currentMediaIndex === 0}
+								>
+									<i class="bi bi-arrow-left"></i>
+								</button>
+								<button
+									class="btn d-none d-md-flex align-items-center justify-content-center hover-effect bg-black text-white position-absolute"
+									style="--corso-color: #{corsoColor}; width: 60px; height: 60px; border-radius: 50%; right: 10px; top: 50%; transform: translateY(-50%);"
+									onclick={nextMedia}
+									class:opacity-0={currentMediaIndex === project.immagini.length - 1}
+								>
+									<i class="bi bi-arrow-right"></i>
+								</button>
+							{/if}
 						{/if}
 					</div>
 				</div>
@@ -186,5 +193,14 @@
 	.hover-effect:hover {
 		background-color: white !important;
 		color: var(--corso-color) !important;
+	}
+	.modal-content {
+		background-color: transparent;
+		border: none;
+	}
+	.image-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 </style>
