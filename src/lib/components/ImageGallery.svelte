@@ -1,8 +1,6 @@
 <script>
 	import { urlFor } from '$lib/sanityClient.js';
 	import { browser } from '$app/environment';
-	import { slide } from 'svelte/transition';
-	import { cubicInOut } from 'svelte/easing';
 
 	let isMobile = $state(false);
 
@@ -103,31 +101,28 @@
 			{/each}
 		</div>
 
-		{#if currentIndex > 0}
-			<button
-				class="btn me-2 ms-2 d-flex align-items-center justify-content-center position-absolute top-50 start-0 translate-middle-y gallery-button"
-				style="--hover-color: #{color};"
-				onclick={prevImage}
-			>
-				<i class="bi bi-arrow-left"></i>
-			</button>
-		{/if}
-
-		{#if currentIndex < images.length - 1}
-			<button
-				class="btn ms-2 me-2 d-flex align-items-center justify-content-center position-absolute top-50 end-0 translate-middle-y gallery-button"
-				style="--hover-color: #{color};"
-				onclick={nextImage}
-			>
-				<i class="bi bi-arrow-right"></i>
-			</button>
-		{/if}
+		<button
+			class="btn-slide btn me-2 ms-2 d-flex align-items-center justify-content-center position-absolute top-50 start-0 translate-middle-y gallery-button"
+			style="--hover-color: #{color};"
+			onclick={prevImage}
+			disabled={currentIndex === 0}
+		>
+			<i class="bi bi-arrow-left"></i>
+		</button>
+		<button
+			class="btn ms-2 me-2 d-flex align-items-center justify-content-center position-absolute top-50 end-0 translate-middle-y gallery-button"
+			style="--hover-color: #{color};"
+			onclick={nextImage}
+			disabled={currentIndex === images.length - 1}
+		>
+			<i class="bi bi-arrow-right"></i>
+		</button>
 	{/if}
 </div>
 
 <style>
 	.image-gallery {
-		height: 550px;
+		height: auto;
 		overflow: hidden;
 		position: relative;
 		touch-action: pan-y;
@@ -150,6 +145,7 @@
 		height: 100%;
 		object-fit: contain;
 		cursor: pointer;
+		object-position: top;
 	}
 
 	.gallery-button {
@@ -159,13 +155,19 @@
 		background-color: black;
 		color: white;
 		transition:
-			background-color 0.3s,
-			color 0.3s;
+			background-color 0.1s,
+			color 0.1s;
 	}
 
 	.gallery-button:hover {
 		background-color: white;
 		color: var(--hover-color);
+		border: none;
+	}
+
+	.gallery-button:disabled {
+		border: none !important;
+		outline: none !important;
 	}
 
 	@media (max-width: 768px) {

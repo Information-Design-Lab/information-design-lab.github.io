@@ -34,11 +34,16 @@
 				Il laboratorio di Information Design, sviluppato su due moduli integrati, ha l'obiettivo di
 				introdurre gli studenti alla progettazione di artefatti comunicativi che hanno lo scopo di
 				veicolare temi e informazioni complesse e offrire una visione ampia sul valore, sulle
-				potenzialità e i limiti dei dati. Gli studenti, organizzati in gruppi di lavoro, partiranno
-				dalla selezione di un tema di ricerca che svilupperanno tramite la selezione e l'analisi
-				visuale di set di dati che ne rappresentano alcune dimensioni. Dopo una prima fase di
-				analisi, gli studenti dovranno sviluppare un progetto composto da tre elementi: una
-				pubblicazione digitale in grado di presentare il tema e i dati analizzati;
+				potenzialità e i limiti dei dati.
+			</p>
+			<p class="fw-semibold fs-3">
+				Gli studenti, organizzati in gruppi di lavoro, partiranno dalla selezione di un tema di
+				ricerca che svilupperanno tramite la selezione e l'analisi visuale di set di dati che ne
+				rappresentano alcune dimensioni.
+			</p>
+			<p class="fw-semibold fs-3">
+				Dopo una prima fase di analisi, gli studenti dovranno sviluppare un progetto composto da tre
+				elementi: una pubblicazione digitale in grado di presentare il tema e i dati analizzati;
 				un'installazione/campagna di comunicazione capace di riportare l'esperienza digitale in uno
 				spazio fisico; un video che racconta l'intera esperienza in tutte le sue fasi significative.
 			</p>
@@ -80,7 +85,7 @@
 						<span class="fw-normal text-uppercase">{corso.titolo}</span>
 					</a>
 					<span
-						class="badge rounded-pill text-white border border-white fs-6 mt-2"
+						class="fw-semibold badge rounded-pill text-white border border-white fs-6 mt-2"
 						style="background-color: {'#' + corso.colore}">{corso.anno}</span
 					>
 				</h1>

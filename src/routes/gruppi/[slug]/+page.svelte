@@ -31,7 +31,7 @@
 {#if data.gruppo}
 	<div class="container-fluid mt-1">
 		<div class="row">
-			<div class="col-md-12 border-bottom border-white py-2">
+			<div class="col-md-12 border-2 border-bottom border-white py-1">
 				<h1 class="d-flex align-items-center gap-3">
 					<a
 						href="{base}/corsi/{data.gruppo.corso.slug.current}"
@@ -40,7 +40,7 @@
 						<span class="fw-normal text-uppercase">{data.gruppo.corso.titolo}</span>
 					</a>
 					<span
-						class="badge rounded-pill text-white border border-white fs-6 mt-2"
+						class="fw-semibold badge rounded-pill text-white border border-white fs-6 mt-0"
 						style="background-color: {'#' + data.gruppo.corso.colore}"
 						>{data.gruppo.corso.anno}</span
 					>
@@ -48,16 +48,16 @@
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid sticky-top bg-blur">
+	<div class="container-fluid sticky-top bg-blur" style="background-color: rgba(0, 0, 0, 0.2);">
 		<div class="row">
-			<div class="col-md-12 border-bottom border-white pt-3 pb-2">
-				<h1 class="fs-big fw-normal text-uppercase">{data.gruppo.nome}</h1>
+			<div class="col-md-12 border-2 border-bottom border-white py-1">
+				<h1 class="mb-0 fs-big fw-normal text-uppercase">{data.gruppo.nome}</h1>
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid mt-4">
+	<div class="container-fluid">
 		<div class="row">
-			<div class="col-md-12 py-2">
+			<div class="col-md-12 py-3">
 				<p class="fs-4">{data.gruppo.descrizione}</p>
 			</div>
 		</div>

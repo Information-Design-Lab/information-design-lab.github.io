@@ -29,7 +29,7 @@
 
 <div
 	bind:this={headerElement}
-	class="container-fluid bg-black header sticky-top border-0 border-bottom"
+	class="container-fluid bg-black header sticky-top border-2 border-bottom"
 >
 	<div class="row d-flex justify-content-between align-items-center h-100">
 		<div class="col-auto">

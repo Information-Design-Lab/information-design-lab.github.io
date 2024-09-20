@@ -76,16 +76,16 @@
 </script>
 
 {#if project}
-	<div class="container-fluid border-bottom border-white mt-3 pb-5">
+	<div class="container-fluid border-bottom border-white pb-5">
 		<ProjectDetails {project} />
 		<div class="row">
 			<div class="col-md-6 col-sm-12" style="min-height:600px;">
-				<div class="d-flex flex-column align-items-start justify-content-around h-100">
+				<div class="d-flex flex-column align-items-start h-100">
 					<p class="fs-5">
 						{project.descrizione}
 					</p>
 					<button
-						class="btn rounded-pill hover-effect text-white"
+						class="btn rounded-pill hover-effect text-white mt-5"
 						style="--corso-color: #{corsoColor}; background-color: #{corsoColor};"
 						onclick={handleViewProject}>Vedi il progetto</button
 					>
@@ -163,7 +163,7 @@
 									class="btn d-none d-md-flex align-items-center justify-content-center hover-effect bg-black text-white position-absolute"
 									style="--corso-color: #{corsoColor}; width: 60px; height: 60px; border-radius: 50%; left: 10px; top: 50%; transform: translateY(-50%);"
 									onclick={prevMedia}
-									class:opacity-0={currentMediaIndex === 0}
+									disabled={currentMediaIndex === 0}
 								>
 									<i class="bi bi-arrow-left"></i>
 								</button>
@@ -171,7 +171,7 @@
 									class="btn d-none d-md-flex align-items-center justify-content-center hover-effect bg-black text-white position-absolute"
 									style="--corso-color: #{corsoColor}; width: 60px; height: 60px; border-radius: 50%; right: 10px; top: 50%; transform: translateY(-50%);"
 									onclick={nextMedia}
-									class:opacity-0={currentMediaIndex === project.immagini.length - 1}
+									disabled={currentMediaIndex === project.immagini.length - 1}
 								>
 									<i class="bi bi-arrow-right"></i>
 								</button>

@@ -16,14 +16,10 @@
 	function handleVideoEnded() {
 		showPlayButton = true;
 	}
-
-	function handleVideoPause() {
-		showPlayButton = true;
-	}
 </script>
 
 {#if project}
-	<div class="container-fluid mt-3">
+	<div class="container-fluid">
 		<div class="row">
 			<ProjectDetails {project} />
 		</div>
@@ -38,19 +34,19 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		<div class="row">
+		<div class="row gx-0" style="margin-top: 20px;">
 			{#if project?.immagini?.[0]}
-				<div class="col-md-4 col-xs-12 mt-2">
+				<div class="exp-img col-md-4 col-xs-12">
 					<img class="w-100" src={urlFor(project?.immagini?.[0]).url()} alt={project?.titolo} />
 				</div>
 			{/if}
 			{#if project?.immagini?.[1]}
-				<div class="col-md-4 col-xs-12 mt-2">
+				<div class="exp-img col-md-4 col-xs-12">
 					<img class="w-100" src={urlFor(project?.immagini?.[1]).url()} alt={project?.titolo} />
 				</div>
 			{/if}
 			{#if project?.immagini?.[2]}
-				<div class="col-md-4 col-xs-12 mt-2">
+				<div class="exp-img col-md-4 col-xs-12">
 					<img class="w-100" src={urlFor(project?.immagini?.[2]).url()} alt={project?.titolo} />
 				</div>
 			{/if}
@@ -96,3 +92,9 @@
 		</div>
 	</div>
 {/if}
+
+<style>
+	.exp-img {
+		padding: 0 10px 0 10px;
+	}
+</style>

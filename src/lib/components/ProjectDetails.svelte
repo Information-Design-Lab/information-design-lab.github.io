@@ -2,7 +2,7 @@
 	const { project } = $props();
 </script>
 
-<div class="row">
+<div class="row mt-3" style="margin-bottom: 100px;">
 	<div class="col-md-6 col-sm-12">
 		<h5 class="text-uppercase">{project.titolo}</h5>
 	</div>
