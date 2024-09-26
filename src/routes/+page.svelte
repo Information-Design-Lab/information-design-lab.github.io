@@ -1,10 +1,11 @@
 <script>
 	import { base } from '$app/paths';
 	import { createSquareAtMouse } from '$lib/cursorEffect.js';
+	import { PortableText } from '@portabletext/svelte';
 
 	const page = $props();
 	const corsi = $derived(page.data.corsi);
-
+	const home = $derived(page.data.home);
 	let firstContainer;
 
 	$effect(() => {
@@ -29,27 +30,12 @@
 
 <div class="container-fluid mt-2" bind:this={firstContainer}>
 	<div class="row justify-content-between">
-		<div class="col-md-7 col-sm-12">
-			<p class="fw-semibold fs-3">
-				Il laboratorio di Information Design, sviluppato su due moduli integrati, ha l'obiettivo di
-				introdurre gli studenti alla progettazione di artefatti comunicativi che hanno lo scopo di
-				veicolare temi e informazioni complesse e offrire una visione ampia sul valore, sulle
-				potenzialità e i limiti dei dati.
-			</p>
-			<p class="fw-semibold fs-3">
-				Gli studenti, organizzati in gruppi di lavoro, partiranno dalla selezione di un tema di
-				ricerca che svilupperanno tramite la selezione e l'analisi visuale di set di dati che ne
-				rappresentano alcune dimensioni.
-			</p>
-			<p class="fw-semibold fs-3">
-				Dopo una prima fase di analisi, gli studenti dovranno sviluppare un progetto composto da tre
-				elementi: una pubblicazione digitale in grado di presentare il tema e i dati analizzati;
-				un'installazione/campagna di comunicazione capace di riportare l'esperienza digitale in uno
-				spazio fisico; un video che racconta l'intera esperienza in tutte le sue fasi significative.
-			</p>
+		<div class="col-md-7 col-sm-12 home-main">
+			<PortableText value={home.descrizione} />
 		</div>
-		<div class="col-md-4 col-sm-12 mt-2">
-			<div class="mb-4">
+		<div class="col-md-4 col-sm-12 mt-2 sidebar">
+			<PortableText value={home.info} />
+			<!--<div class="mb-4">
 				<h6 class="fw-normal">SUPERVISIONE</h6>
 				<p class="mb-0 fw-semibold">Giorgio Uboldi</p>
 				<p class="mb-0 fw-semibold">Marco Luitprandi</p>
@@ -67,7 +53,7 @@
 			<div class="text-light">
 				<p class="mb-0 fs-6">Design by Alessandra Valentini</p>
 				<p class="mb-0 mt-0 fs-6">Development by Daniele Ciminieri (Calibro)</p>
-			</div>
+			</div>-->
 		</div>
 	</div>
 </div>
@@ -97,5 +83,30 @@
 <style>
 	p {
 		font-size: 1.25rem;
+	}
+	.home-main :global(p) {
+		font-size: 1.75rem;
+	}
+	.sidebar :global(ul) {
+		list-style: none;
+		padding-left: 0;
+		font-size: 1.25rem;
+	}
+	.sidebar :global(a) {
+		font-size: 1.25rem;
+	}
+	.sidebar :global(h5:first-of-type) {
+		margin-top: 0;
+	}
+	.sidebar :global(h6:first-of-type) {
+		margin-top: 2rem;
+	}
+	.sidebar :global(h5) {
+		font-size: 1rem;
+		margin-top: 1.5em;
+	}
+	.sidebar :global(h6) {
+		font-size: 1rem;
+		color: #666666;
 	}
 </style>

@@ -1,3 +1,10 @@
+export const getHome = () => {
+    return `*[_type == "home"][0]{
+        descrizione,
+        info
+    }`
+};
+
 export const getCorsi = () => {
     return `*[_type=="corso"]{
         _id,titolo,anno,colore,slug
