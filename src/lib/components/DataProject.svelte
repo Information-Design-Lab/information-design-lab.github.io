@@ -15,6 +15,8 @@
 	let modalContent = $state(null);
 	let Hammer;
 
+	$inspect(project);
+
 	function handleViewProject() {
 		if (project.video) {
 			showModal = true;
@@ -104,7 +106,7 @@
 		<div class="row">
 			<div class="col-md-12 col-sm-12">
 				<div class="d-none d-md-flex flex-wrap mt-2">
-					{#each project.immagini as image, index}
+					{#each project?.immagini as image, index}
 						<div class="col-md-3 p-2">
 							<!-- svelte-ignore a11y_click_events_have_key_events -->
 							<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
@@ -178,7 +180,7 @@
 							: 'justify-content-between'} align-items-center border-0"
 						style={!isVideo ? 'width:calc(100vh - 200px); align-self:center; max-width: 100%' : ''}
 					>
-						{#if !isVideo && project.immagini && project.immagini.length > 0}
+						{#if !isVideo && project?.immagini && project?.immagini?.length > 0}
 							<div class="align-self-start d-flex flex-row gap-3">
 								<BlurredIconButton
 									icon="bi bi-arrow-left"
@@ -218,12 +220,12 @@
 								<source src={getVideoUrl(project.video)} type="video/mp4" />
 								Your browser does not support the video tag.
 							</video>
-						{:else if project.immagini && project.immagini.length > 0}
+						{:else if project?.immagini && project?.immagini?.length > 0}
 							<div
 								class="image-container"
 								style="width: 100%; height: calc(100vh - 200px); position: relative; overflow: hidden;"
 							>
-								{#each project.immagini as image, index}
+								{#each project?.immagini as image, index}
 									{#if Math.abs(index - currentMediaIndex) <= 1}
 										<div
 											in:slide={{ duration: 300, easing: cubicInOut }}
