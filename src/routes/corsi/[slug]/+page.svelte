@@ -50,8 +50,12 @@
 {/if}
 
 <style>
-	.group-item:hover {
-		background-color: var(--corso-color);
+	.group-item a p {
+		transition: all 0.3s ease-in-out;
+	}
+	.group-item:hover a p {
+		color: var(--corso-color);
+		filter: blur(2px);
 	}
 	.fw-big {
 		font-size: 4rem;
