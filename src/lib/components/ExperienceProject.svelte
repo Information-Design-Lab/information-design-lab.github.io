@@ -19,17 +19,44 @@
 </script>
 
 {#if project}
-	<div class="container-fluid">
+	<!--<div class="container-fluid">
 		<div class="row">
 			<ProjectDetails {project} />
 		</div>
-	</div>
-	<div class="container-fluid">
+	</div>-->
+	<div class="container-fluid mt-3">
 		<div class="row">
 			<div class="col-md-12">
 				{#if project?.immagini?.[3]}
 					<img class="w-100" src={urlFor(project?.immagini?.[3]).url()} alt={project?.titolo} />
 				{/if}
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid my-5">
+		<!-- 
+		<ProjectDetails {project} />
+		 -->
+		<div class="row">
+			<div class="col-md-3 offset-md-3 col-sm-12">
+				<div>
+					<h5 class="text-uppercase">{project.titolo}</h5>
+					{#if project.studenti && project.studenti.length > 1}
+						<p class="fs-5 mb-2">Progetto collettivo</p>
+					{:else if project.studenti}
+						{#each project.studenti as student}
+							<p class="fs-5 mb-2">{student.nome} {student.cognome}</p>
+						{/each}
+					{/if}
+				</div>
+				<p class="fs-5 text-secondary mt-0">{project.tipologia}</p>
+			</div>
+			<div class="col-md-6 col-sm-12">
+				<div class="d-flex flex-column align-items-start h-100">
+					<p class="fs-5">
+						{project.descrizione}
+					</p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -52,13 +79,8 @@
 			{/if}
 		</div>
 	</div>
-	<div class="container-fluid mt-5">
-		<div class="row">
-			<div class="col-md-5 col-xs-12">
-				<p class="fs-5">
-					{project?.descrizione}
-				</p>
-			</div>
+	<div class="container-fluid mt-5 mb-5">
+		<div class="row justify-content-center">
 			<div class="col-md-7 col-xs-12">
 				{#if project.video}
 					<div class="ratio ratio-16x9 position-relative">

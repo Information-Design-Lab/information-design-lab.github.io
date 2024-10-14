@@ -1,7 +1,7 @@
 // Configuration variables for the grid
 const MIN_GRID_SIZE = 50; // Minimum size of each grid cell in pixels
 const MAX_GRID_SIZE = 50; // Maximum size of each grid cell in pixels
-const ANIMATION_DURATION = 1000; // Duration of the square's visibility in milliseconds
+const ANIMATION_DURATION = 2000; // Duration of the square's visibility in milliseconds
 const PADDING = 0; // Padding between squares in pixels
 const BORDER_ONLY = false; // If true, only draw the border of the div
 
@@ -33,7 +33,8 @@ export function createSquareAtMouse(x, y) {
     square.style.height = `${GRID_SIZE}px`;
     square.style.mixBlendMode = 'difference'; // This will invert the colors underneath
     square.style.pointerEvents = 'none'; // Ensure it doesn't interfere with other elements
-    square.style.transition = 'opacity ' + ANIMATION_DURATION / 1000 + 's ease-out'; // Add transition for fading effect
+    square.style.transition = 'all ' + ANIMATION_DURATION / 1000 + 's ease-out'; // Add transition for fading effect
+    square.style.filter = 'blur(0px)';
     square.dataset.x = cellX; // Add data attributes to identify the square's position
     square.dataset.y = cellY;
 
@@ -50,6 +51,7 @@ export function createSquareAtMouse(x, y) {
     // Start the fading effect after a short delay
     setTimeout(() => {
         square.style.opacity = '0';
+        square.style.filter = 'blur(20px)';
     }, 50);
 
     // Remove the square after the animation completes

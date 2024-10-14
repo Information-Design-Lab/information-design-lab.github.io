@@ -2,6 +2,8 @@
 	import { base } from '$app/paths';
 	import DataProject from '$lib/components/DataProject.svelte';
 	import ExperienceProject from '$lib/components/ExperienceProject.svelte';
+	import BlurredIconButton from '$lib/components/BlurredIconButton.svelte';
+	import { goto } from '$app/navigation';
 	const { data } = $props();
 
 	const sortedProjects = $derived(
@@ -26,6 +28,22 @@
 	const nextIndex = $derived(
 		currentIndex < data?.gruppo?.gruppi?.length - 1 ? currentIndex + 1 : 0
 	);
+
+	function goToPrevGroup() {
+		if (data.gruppo.prev) {
+			goto(`${base}/gruppi/${data.gruppo.prev.slug.current}`);
+		}
+	}
+
+	function goToNextGroup() {
+		if (data.gruppo.next) {
+			goto(`${base}/gruppi/${data.gruppo.next.slug.current}`);
+		}
+	}
+
+	function scrollToTop() {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	}
 </script>
 
 {#if data.gruppo}
@@ -40,9 +58,11 @@
 						<span class="fw-normal text-uppercase">{data.gruppo.corso.titolo}</span>
 					</a>
 					<span
-						class="fw-semibold badge rounded-pill text-white border border-white fs-6 mt-0"
-						style="background-color: {'#' + data.gruppo.corso.colore}"
-						>{data.gruppo.corso.anno}</span
+						class="fw-semibold badge rounded-pill text-white fs-6 mt-0"
+						style="box-shadow: inset 0 0 2px 2px {'#' +
+							data.gruppo.corso.colore}, 0 0 2px 2px {'#' + data.gruppo.corso.colore}; 
+						border: 1px solid {'#' + data.gruppo.corso.colore}; background-color: {'#' +
+							data.gruppo.corso.colore}">{data.gruppo.corso.anno}</span
 					>
 				</h1>
 			</div>
@@ -82,31 +102,41 @@
 	{/each}
 
 	<div class="container-fluid mt-4 mb-4">
-		<div class="row justify-content-between">
-			{#if data.gruppo.prev}
-				<div class="col-auto d-flex align-items-center">
-					<a
-						href="{base}/gruppi/{data.gruppo.prev.slug.current}"
-						class="btn rounded-pill d-flex align-items-center justify-content-center hover-effect"
-						style="--corso-color: #{data.gruppo.corso.colore}; width: 40px; height: 40px;"
-					>
-						<i class="bi bi-arrow-left text-white"></i>
-					</a>
-					<span class="ms-3 fs-5 text-uppercase">Precedente</span>
+		<div class="row my-4">
+			<div class="col-12 d-flex justify-content-end align-items-center">
+				<span class="fs-5 me-3">Torna su</span>
+				<BlurredIconButton
+					icon="bi bi-arrow-up"
+					color={data.gruppo.corso.colore}
+					onClick={scrollToTop}
+					--btn-color={'#' + data.gruppo.corso.colore}
+				/>
+			</div>
+		</div>
+		<div class="row justify-content-between mb-5">
+			<div class="col-12 d-flex justify-content-between align-items-center">
+				<div class="d-flex align-items-center">
+					{#if data.gruppo.prev}
+						<BlurredIconButton
+							icon="bi bi-arrow-left"
+							color={data.gruppo.corso.colore}
+							onClick={goToPrevGroup}
+							--btn-color={'#' + data.gruppo.corso.colore}
+						/>
+						<span class="fs-5 ms-3">Gruppo precedente</span>
+					{/if}
 				</div>
-			{/if}
-			<div class="col-auto d-flex align-items-center ms-auto">
-				{#if data.gruppo.next}
-					<span class="me-3 fs-5 text-uppercase">Successivo</span>
-
-					<a
-						href="{base}/gruppi/{data.gruppo.next.slug.current}"
-						class="btn rounded-pill d-flex align-items-center justify-content-center hover-effect"
-						style="--corso-color: #{data.gruppo.corso.colore}; width: 40px; height: 40px;"
-					>
-						<i class="bi bi-arrow-right text-white"></i>
-					</a>
-				{/if}
+				<div class="d-flex align-items-center">
+					{#if data.gruppo.next}
+						<span class="me-3 fs-5">Gruppo successivo</span>
+						<BlurredIconButton
+							icon="bi bi-arrow-right"
+							color={data.gruppo.corso.colore}
+							onClick={goToNextGroup}
+							--btn-color={'#' + data.gruppo.corso.colore}
+						/>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -116,14 +146,7 @@
 	.fs-big {
 		font-size: 4rem;
 	}
-	.hover-effect {
-		background-color: var(--corso-color);
-	}
-	.hover-effect:hover {
-		background-color: white !important;
-		color: var(--corso-color) !important;
-	}
-	.hover-effect:hover i {
-		color: var(--corso-color) !important;
-	}
+	/*:global(.btn-blur) {
+		--btn-color: #{data.gruppo.corso.colore};
+	}*/
 </style>

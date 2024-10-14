@@ -3,7 +3,7 @@
 	import Header from '$lib/components/Header.svelte';
 </script>
 
-<div class="container-xxl">
+<div class="container-fluid">
 	<Header />
 	<slot />
 </div>

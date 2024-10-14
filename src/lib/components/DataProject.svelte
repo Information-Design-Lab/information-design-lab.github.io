@@ -1,11 +1,12 @@
 <script>
 	import { getVideoUrl } from '$lib/sanityClient';
-	import ProjectDetails from './ProjectDetails.svelte';
 	import ImageGallery from './ImageGallery.svelte';
 	import { urlFor } from '$lib/sanityClient';
 	import { browser } from '$app/environment';
 	import { slide } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
+	import BlurredButton from '$lib/components/BlurredButton.svelte';
+	import BlurredIconButton from './BlurredIconButton.svelte';
 
 	const { project, corsoColor } = $props();
 	let showModal = $state(false);
@@ -19,6 +20,7 @@
 			showModal = true;
 			isVideo = true;
 			currentMediaIndex = 0;
+			disableBodyScroll();
 		} else if (project.link) {
 			window.open(project.link, '_blank');
 		}
@@ -28,10 +30,12 @@
 		showModal = true;
 		isVideo = false;
 		currentMediaIndex = index;
+		disableBodyScroll();
 	}
 
 	function closeModal() {
 		showModal = false;
+		enableBodyScroll();
 	}
 
 	function nextMedia() {
@@ -54,6 +58,18 @@
 		}
 	}
 
+	function disableBodyScroll() {
+		if (browser) {
+			document.body.style.overflow = 'hidden';
+		}
+	}
+
+	function enableBodyScroll() {
+		if (browser) {
+			document.body.style.overflow = '';
+		}
+	}
+
 	$effect(async () => {
 		if (browser) {
 			Hammer = (await import('hammerjs')).default;
@@ -73,30 +89,75 @@
 			};
 		}
 	});
+
+	$effect(() => {
+		return () => {
+			if (showModal) {
+				enableBodyScroll();
+			}
+		};
+	});
 </script>
 
 {#if project}
-	<div class="container-fluid border-bottom border-white pb-5">
-		<ProjectDetails {project} />
+	<div class="container-fluid pb-5">
 		<div class="row">
-			<div class="col-md-6 col-sm-12" style="min-height:600px;">
+			<div class="col-md-12 col-sm-12">
+				<div class="d-none d-md-flex flex-wrap mt-2">
+					{#each project.immagini as image, index}
+						<div class="col-md-3 p-2">
+							<!-- svelte-ignore a11y_click_events_have_key_events -->
+							<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+							<img
+								src={urlFor(image).url()}
+								alt={`Project image ${index + 1}`}
+								class="img-fluid cursor-pointer"
+								onclick={() => handleImageClick(index)}
+							/>
+						</div>
+					{/each}
+				</div>
+				<div class="d-md-none mt-2">
+					<ImageGallery
+						color={corsoColor}
+						images={project.immagini}
+						onImageClick={handleImageClick}
+					/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid border-bottom border-white pb-5">
+		<!-- 
+		<ProjectDetails {project} />
+		 -->
+		<div class="row">
+			<div class="col-md-3 offset-md-3 col-sm-12">
+				<div>
+					<h5 class="text-uppercase">{project.titolo}</h5>
+					{#if project.studenti && project.studenti.length > 1}
+						<p class="fs-5 mb-2">Progetto collettivo</p>
+					{:else if project.studenti}
+						{#each project.studenti as student}
+							<p class="fs-5 mb-2">{student.nome} {student.cognome}</p>
+						{/each}
+					{/if}
+				</div>
+				<p class="fs-5 text-secondary mt-0">{project.tipologia}</p>
+			</div>
+			<div class="col-md-6 col-sm-12">
 				<div class="d-flex flex-column align-items-start h-100">
 					<p class="fs-5">
 						{project.descrizione}
 					</p>
-					<button
-						class="btn rounded-pill hover-effect text-white mt-5"
-						style="--corso-color: #{corsoColor}; background-color: #{corsoColor};"
-						onclick={handleViewProject}>Vedi il progetto</button
-					>
+					<BlurredButton
+						text="Vedi il progetto"
+						color={corsoColor}
+						onClick={handleViewProject}
+						--btn-color={'#' + corsoColor}
+						classes="my-5"
+					/>
 				</div>
-			</div>
-			<div class="col-md-6 col-sm-12">
-				<ImageGallery
-					color={corsoColor}
-					images={project.immagini}
-					onImageClick={handleImageClick}
-				/>
 			</div>
 		</div>
 	</div>
@@ -107,19 +168,40 @@
 		<div class="modal modal-xl" style="display: block" onclick={handleOutsideClick}>
 			<div
 				class="modal-backdrop fade show"
-				style="opacity: 0.5; background-color: #{corsoColor};"
+				style="opacity:1 !important; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(10px);"
 			></div>
 			<div class="modal-dialog modal-dialog-centered" style="z-index: 1050;">
 				<div class="modal-content">
-					<div class="modal-header d-flex justify-content-center align-items-center border-0">
-						<button
-							type="button"
-							class="btn px-3 py-2 rounded-pill border-0 hover-effect bg-black text-white"
-							style="--corso-color: #{corsoColor};"
-							onclick={closeModal}
-						>
-							Chiudi
-						</button>
+					<div
+						class="modal-header px-0 d-flex {isVideo
+							? 'justify-content-end'
+							: 'justify-content-between'} align-items-center border-0"
+						style={!isVideo ? 'width:calc(100vh - 200px); align-self:center; max-width: 100%' : ''}
+					>
+						{#if !isVideo && project.immagini && project.immagini.length > 0}
+							<div class="align-self-start d-flex flex-row gap-3">
+								<BlurredIconButton
+									icon="bi bi-arrow-left"
+									color={corsoColor}
+									onClick={prevMedia}
+									disabled={currentMediaIndex === 0}
+									--btn-color={'#' + corsoColor}
+								/>
+								<BlurredIconButton
+									icon="bi bi-arrow-right"
+									color={corsoColor}
+									onClick={nextMedia}
+									disabled={currentMediaIndex === project.immagini.length - 1}
+									--btn-color={'#' + corsoColor}
+								/>
+							</div>
+						{/if}
+						<BlurredButton
+							text="Chiudi"
+							color={corsoColor}
+							onClick={closeModal}
+							--btn-color={'#' + corsoColor}
+						/>
 					</div>
 					<div
 						class="modal-body d-flex align-items-center justify-content-center p-0 position-relative"
@@ -158,24 +240,6 @@
 									{/if}
 								{/each}
 							</div>
-							{#if !isVideo && project.immagini && project.immagini.length > 1}
-								<button
-									class="btn d-none d-md-flex align-items-center justify-content-center hover-effect bg-black text-white position-absolute"
-									style="--corso-color: #{corsoColor}; width: 60px; height: 60px; border-radius: 50%; left: 10px; top: 50%; transform: translateY(-50%);"
-									onclick={prevMedia}
-									disabled={currentMediaIndex === 0}
-								>
-									<i class="bi bi-arrow-left"></i>
-								</button>
-								<button
-									class="btn d-none d-md-flex align-items-center justify-content-center hover-effect bg-black text-white position-absolute"
-									style="--corso-color: #{corsoColor}; width: 60px; height: 60px; border-radius: 50%; right: 10px; top: 50%; transform: translateY(-50%);"
-									onclick={nextMedia}
-									disabled={currentMediaIndex === project.immagini.length - 1}
-								>
-									<i class="bi bi-arrow-right"></i>
-								</button>
-							{/if}
 						{/if}
 					</div>
 				</div>
@@ -185,15 +249,6 @@
 {/if}
 
 <style>
-	.hover-effect {
-		transition:
-			background-color 0.1s,
-			color 0s;
-	}
-	.hover-effect:hover {
-		background-color: white !important;
-		color: var(--corso-color) !important;
-	}
 	.modal-content {
 		background-color: transparent;
 		border: none;
@@ -202,5 +257,8 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+	}
+	.cursor-pointer {
+		cursor: pointer;
 	}
 </style>
