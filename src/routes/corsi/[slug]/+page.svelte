@@ -12,7 +12,7 @@
 						<span class="fw-normal text-uppercase">{data.corso.titolo}</span>
 						<span
 							class="badge fw-semibold rounded-pill text-white fs-6 mt-0"
-							style="box-shadow: inset 0 0 2px 2px {'#' + data.corso.colore}, 0 0 2px 2px {'#' +
+							style="box-shadow: inset 0 0 4px 2px {'#' + data.corso.colore}, 0 0 4px 2px {'#' +
 								data.corso.colore}; 
 						border: 1px solid {'#' + data.corso.colore}; background-color: {'#' + data.corso.colore}"
 							>{data.corso.anno}</span

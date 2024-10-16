@@ -57,7 +57,7 @@
 					</a>
 					<span
 						class="fw-semibold badge rounded-pill text-white fs-6 mt-2"
-						style="box-shadow: inset 0 0 4px 2px {'#' + corso.colore}, 0 0 2px 2px {'#' +
+						style="box-shadow: inset 0 0 4px 2px {'#' + corso.colore}, 0 0 4px 2px {'#' +
 							corso.colore}; 
 						border: 1px solid {'#' + corso.colore}; background-color: {'#' + corso.colore}">{corso.anno}</span
 					>
