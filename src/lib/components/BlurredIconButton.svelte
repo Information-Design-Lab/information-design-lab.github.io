@@ -5,7 +5,7 @@
 <button
 	class="{classes ||
 		''} btn btn-blur rounded-circle d-flex justify-content-center align-items-center"
-	style="width: 35px; height: 35px;"
+	style="width: 35px; height: 35px; font-weight: 500;"
 	{disabled}
 	onclick={onClick}
 >

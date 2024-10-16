@@ -78,15 +78,18 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12 py-3">
-				<p class="fs-4">{data.gruppo.descrizione}</p>
+				<p style="font-weight: 500;" class="fs-4">{data.gruppo.descrizione}</p>
 			</div>
 		</div>
 		<div class="row mt-5 border-bottom border-white pb-2">
 			<div class="col-md-12">
-				<h6 class="text-uppercase">STUDENTI</h6>
+				<h6 style="font-weight: 500;" class="text-uppercase">STUDENTI</h6>
 				<ul class="list-unstyled">
 					{#each data.gruppo.studenti as studente}
-						<li style="font-size: 1.12rem;">{studente.nome} {studente.cognome}</li>
+						<li style="font-size: 1.12rem; font-weight: 500;">
+							{studente.nome}
+							{studente.cognome}
+						</li>
 					{/each}
 				</ul>
 			</div>
@@ -123,12 +126,12 @@
 							onClick={goToPrevGroup}
 							--btn-color={'#' + data.gruppo.corso.colore}
 						/>
-						<span class="fs-5 ms-3">Gruppo precedente</span>
+						<span class="fs-5 ms-3">PRogetto precedente</span>
 					{/if}
 				</div>
 				<div class="d-flex align-items-center">
 					{#if data.gruppo.next}
-						<span class="me-3 fs-5">Gruppo successivo</span>
+						<span class="me-3 fs-5">Progetto successivo</span>
 						<BlurredIconButton
 							icon="bi bi-arrow-right"
 							color={data.gruppo.corso.colore}

@@ -2,7 +2,10 @@
 	const { text, color, onClick, classes } = $props();
 </script>
 
-<button class="{classes || ''} btn btn-blur rounded-pill px-3 py-1" onclick={onClick}>{text}</button
+<button
+	style="font-weight:500;"
+	class="{classes || ''} btn btn-blur rounded-pill px-3 py-1"
+	onclick={onClick}>{text}</button
 >
 
 <style>
