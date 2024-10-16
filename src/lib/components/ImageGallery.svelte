@@ -1,7 +1,7 @@
 <script>
 	import { urlFor } from '$lib/sanityClient.js';
 	import { browser } from '$app/environment';
-
+	import BlurredIconButton from './BlurredIconButton.svelte';
 	let isMobile = $state(false);
 
 	$effect(() => {
@@ -100,23 +100,22 @@
 				</div>
 			{/each}
 		</div>
-
-		<button
-			class="btn-slide btn me-2 ms-2 d-flex align-items-center justify-content-center position-absolute top-50 start-0 translate-middle-y gallery-button"
-			style="--hover-color: #{color};"
-			onclick={prevImage}
+		<BlurredIconButton
+			icon="bi bi-arrow-left"
+			{color}
+			onClick={prevImage}
 			disabled={currentIndex === 0}
-		>
-			<i class="bi bi-arrow-left"></i>
-		</button>
-		<button
-			class="btn ms-2 me-2 d-flex align-items-center justify-content-center position-absolute top-50 end-0 translate-middle-y gallery-button"
-			style="--hover-color: #{color};"
-			onclick={nextImage}
+			--btn-color={'#' + color}
+			classes="position-absolute top-50 start-0 translate-middle-y ms-2"
+		/>
+		<BlurredIconButton
+			icon="bi bi-arrow-right"
+			{color}
+			onClick={nextImage}
 			disabled={currentIndex === images.length - 1}
-		>
-			<i class="bi bi-arrow-right"></i>
-		</button>
+			--btn-color={'#' + color}
+			classes="position-absolute top-50 end-0 translate-middle-y me-2"
+		/>
 	{/if}
 </div>
 

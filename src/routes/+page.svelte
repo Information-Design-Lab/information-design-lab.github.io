@@ -28,37 +28,18 @@
 	});
 </script>
 
-<div class="container-fluid mt-2" bind:this={firstContainer}>
+<div class="container-fluid mt-2 flex-grow-1" bind:this={firstContainer}>
 	<div class="row justify-content-between">
 		<div class="col-md-7 col-sm-12 home-main">
 			<PortableText value={home.descrizione} />
 		</div>
 		<div class="col-md-4 col-sm-12 mt-2 sidebar">
 			<PortableText value={home.info} />
-			<!--<div class="mb-4">
-				<h6 class="fw-normal">SUPERVISIONE</h6>
-				<p class="mb-0 fw-semibold">Giorgio Uboldi</p>
-				<p class="mb-0 fw-semibold">Marco Luitprandi</p>
-			</div>
-			<div class="mb-4">
-				<h6 class="fw-normal">LAUREA MAGISTRALE</h6>
-				<a href="https://design.unirsm.sm/magistrale/presentazione/" class="fw-semibold fs-5">
-					Interaction & Experience Design
-				</a>
-			</div>
-			<div class="mb-4">
-				<h6 class="fw-normal">UNIVERSITÀ</h6>
-				<a href="https://www.unirsm.sm/" class="fw-semibold fs-5"> Repubblica di San Marino </a>
-			</div>
-			<div class="text-light">
-				<p class="mb-0 fs-6">Design by Alessandra Valentini</p>
-				<p class="mb-0 mt-0 fs-6">Development by Daniele Ciminieri (Calibro)</p>
-			</div>-->
 		</div>
 	</div>
 </div>
 
-<div class="container-fluid mt-4">
+<div class="container-fluid mt-4" id="course-list">
 	{#each corsi as corso, index}
 		<div
 			class="row py-2"
@@ -68,11 +49,15 @@
 			<div class="col-12">
 				<h1 class="d-flex align-items-center gap-3">
 					<a href="{base}/corsi/{corso.slug.current}" class="text-decoration-none text-white">
-						<span class="fw-normal text-uppercase">{corso.titolo}</span>
+						<span
+							class="course-title fs-big fw-normal text-uppercase"
+							style="transition: all 0.3s ease-in-out; --color: {'#' + corso.colore}"
+							>{corso.titolo}</span
+						>
 					</a>
 					<span
 						class="fw-semibold badge rounded-pill text-white fs-6 mt-2"
-						style="box-shadow: inset 0 0 2px 2px {'#' + corso.colore}, 0 0 2px 2px {'#' +
+						style="box-shadow: inset 0 0 4px 2px {'#' + corso.colore}, 0 0 2px 2px {'#' +
 							corso.colore}; 
 						border: 1px solid {'#' + corso.colore}; background-color: {'#' + corso.colore}">{corso.anno}</span
 					>
@@ -110,5 +95,17 @@
 	.sidebar :global(h6) {
 		font-size: 1rem;
 		color: #666666;
+	}
+	.fs-big {
+		font-size: 4rem;
+	}
+	.course-title:hover {
+		filter: blur(2px);
+		color: var(--color);
+	}
+	@media (max-width: 768px) {
+		.fs-big {
+			font-size: 2rem;
+		}
 	}
 </style>

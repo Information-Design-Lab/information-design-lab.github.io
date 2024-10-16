@@ -59,8 +59,8 @@
 					</a>
 					<span
 						class="fw-semibold badge rounded-pill text-white fs-6 mt-0"
-						style="box-shadow: inset 0 0 2px 2px {'#' +
-							data.gruppo.corso.colore}, 0 0 2px 2px {'#' + data.gruppo.corso.colore}; 
+						style="box-shadow: inset 0 0 4px 2px {'#' +
+							data.gruppo.corso.colore}, 0 0 4px 2px {'#' + data.gruppo.corso.colore}; 
 						border: 1px solid {'#' + data.gruppo.corso.colore}; background-color: {'#' +
 							data.gruppo.corso.colore}">{data.gruppo.corso.anno}</span
 					>
@@ -86,7 +86,7 @@
 				<h6 class="text-uppercase">STUDENTI</h6>
 				<ul class="list-unstyled">
 					{#each data.gruppo.studenti as studente}
-						<li class="fs-5 text-uppercase">{studente.nome} {studente.cognome}</li>
+						<li style="font-size: 1.12rem;">{studente.nome} {studente.cognome}</li>
 					{/each}
 				</ul>
 			</div>
@@ -149,4 +149,9 @@
 	/*:global(.btn-blur) {
 		--btn-color: #{data.gruppo.corso.colore};
 	}*/
+	@media (max-width: 768px) {
+		.fs-big {
+			font-size: 3rem;
+		}
+	}
 </style>

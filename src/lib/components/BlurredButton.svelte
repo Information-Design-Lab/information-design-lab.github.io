@@ -10,8 +10,8 @@
 		background-color: transparent;
 		color: white;
 		box-shadow:
-			inset 0px 0px 2px 2px var(--btn-color),
-			0px 0px 2px 2px var(--btn-color);
+			inset 0px 0px 4px 2px var(--btn-color),
+			0px 0px 4px 2px var(--btn-color);
 		border: 1px solid var(--btn-color);
 		transition: all 0.3s ease;
 	}
