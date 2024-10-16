@@ -23,7 +23,7 @@
 		</div>
 		<div class="container-fluid mt-4 flex-grow-1">
 			<div class="row">
-				<div class="col-md-7 col-sm-12">
+				<div class="col-md-6 col-sm-12">
 					<p class="fs-4 fw-semibold">{data.corso.descrizione}</p>
 				</div>
 			</div>

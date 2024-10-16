@@ -40,20 +40,20 @@
 		<div class="row">
 			<div class="col-md-3 offset-md-3 col-sm-12">
 				<div>
-					<h5 class="text-uppercase">{project.titolo}</h5>
+					<h6 style="font-weight: 500;" class="text-uppercase mb-1">{project.titolo}</h6>
 					{#if project.studenti && project.studenti.length > 1}
-						<p class="fs-5 mb-2">Progetto collettivo</p>
+						<p style="margin-bottom: 10px;" class="fs-6">Progetto collettivo</p>
 					{:else if project.studenti}
 						{#each project.studenti as student}
-							<p class="fs-5 mb-2">{student.nome} {student.cognome}</p>
+							<p style="margin-bottom: 10px;" class="fs-6">{student.nome} {student.cognome}</p>
 						{/each}
 					{/if}
 				</div>
-				<p class="fs-5 text-secondary mt-0">{project.tipologia}</p>
+				<p class="fs-6 text-secondary mt-0">{project.tipologia}</p>
 			</div>
 			<div class="col-md-6 col-sm-12">
 				<div class="d-flex flex-column align-items-start h-100">
-					<p class="fs-5">
+					<p class="fs-6">
 						{project.descrizione}
 					</p>
 				</div>

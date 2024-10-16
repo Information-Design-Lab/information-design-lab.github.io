@@ -126,7 +126,7 @@
 							onClick={goToPrevGroup}
 							--btn-color={'#' + data.gruppo.corso.colore}
 						/>
-						<span class="fs-5 ms-3">PRogetto precedente</span>
+						<span class="fs-5 ms-3">Progetto precedente</span>
 					{/if}
 				</div>
 				<div class="d-flex align-items-center">
