@@ -10,7 +10,8 @@ const config = {
 			precompress: false,
 			strict: true,
 			prerender: {
-				default: true
+				default: true,
+				handleHttpError: 'warn'
 			},
 			crawl: true
 		}),
