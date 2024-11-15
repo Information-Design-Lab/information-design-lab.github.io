@@ -3,6 +3,9 @@ import adapter from '@sveltejs/adapter-static';
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
+		prerender: {
+			handleHttpError: 'warn'
+		},
 		adapter: adapter({
 			fallback: '404.html',
 			pages: 'build',
@@ -10,8 +13,7 @@ const config = {
 			precompress: false,
 			strict: true,
 			prerender: {
-				default: true,
-				handleHttpError: 'warn'
+				default: true
 			},
 			crawl: true
 		}),
