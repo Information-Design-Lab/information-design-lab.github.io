@@ -60,7 +60,7 @@
 						<span class="fw-normal text-uppercase">{data.gruppo.corso.titolo}</span>
 					</a>
 					<span
-						class="fw-semibold badge rounded-pill text-white fs-6 mt-2 py-1 px-2"
+						class="fw-semibold badge rounded-pill text-white fs-5 fw-semibold mt-2 py-1 px-2"
 						style="box-shadow: inset 0 0 4px 2px {'#' +
 							data.gruppo.corso.colore}, 0 0 4px 2px {'#' + data.gruppo.corso.colore}; 
 						border: 1px solid {'#' + data.gruppo.corso.colore}; background-color: {'#' +
@@ -80,7 +80,7 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12 py-3">
-				<p style="font-weight: 500;" class="fs-4">
+				<p class="fs-4 fw-semibold">
 					<PortableText value={data.gruppo.descrizione} />
 				</p>
 			</div>
