@@ -7,7 +7,7 @@
 	<meta property="og:title" content="Information design lab" />
 	<meta property="og:type" content="website" />
 	<meta property="og:URL" content="hhttps://information-design-lab.github.io/" />
-	<meta property="og:image" content="https://information-design-lab.github.io/social-media.png" />
+	<meta property="og:image" content="https://information-design-lab.github.io/social-media.jpg" />
 	<meta
 		property="og:description"
 		content="
