@@ -34,7 +34,7 @@
 
 <div class="container-fluid my-4 flex-grow-1" bind:this={firstContainer}>
 	<div class="row">
-		<div class="col-12 fs-1">
+		<div class="col-12 fs-1 fw-semibold">
 			<PortableText value={firstParagraph} />
 		</div>
 	</div>
@@ -42,7 +42,7 @@
 		<div class="col-md-3 col-sm-12 mb-4 mt-2 sidebar">
 			<PortableText value={home.info} />
 		</div>
-		<div class="col-md-8 col-sm-12 home-main">
+		<div class="col-md-8 col-sm-12 home-main fw-semibold">
 			<PortableText value={remainingParagraphs} />
 		</div>
 	</div>
