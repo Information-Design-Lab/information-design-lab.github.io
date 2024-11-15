@@ -34,7 +34,7 @@
 	<div class="row d-flex justify-content-between align-items-center h-100">
 		<div class="col-auto">
 			<h4 class="mb-0 text-uppercase">
-				<a class="text-white text-decoration-none" href="/">Information design lab</a>
+				<a class="text-white text-decoration-none" href="{base}/">Information design lab</a>
 			</h4>
 		</div>
 		<div class="col-auto d-none d-md-block">
