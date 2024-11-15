@@ -53,7 +53,7 @@ export const getGruppi = (slug) => {
         studenti[]->{
             nome,
             cognome,
-        },
+        } | order(cognome asc),
         "prev": *[_type == "gruppo" && corso->_id == ^.corso->_id && nome < ^.nome] | order(nome desc)[0] {
             nome,
             slug

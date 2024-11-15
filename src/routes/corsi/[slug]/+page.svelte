@@ -1,6 +1,8 @@
 <script>
 	import { base } from '$app/paths';
+	import { PortableText } from '@portabletext/svelte';
 	const { data } = $props();
+	$inspect(data);
 </script>
 
 <div class="flex-grow-1 d-flex flex-column justify-content-between">
@@ -8,10 +10,10 @@
 		<div class="container-fluid mt-1 sticky-top bg-blur">
 			<div class="row">
 				<div class="col-md-12 border-2 border-bottom border-white py-1">
-					<h1 class="d-flex align-items-center gap-3">
+					<h1 class="d-flex align-items-start gap-3">
 						<span class="fw-normal text-uppercase">{data.corso.titolo}</span>
 						<span
-							class="badge fw-semibold rounded-pill text-white fs-6 mt-0"
+							class="badge fw-semibold rounded-pill text-white fs-6 mt-2 py-1 px-2"
 							style="box-shadow: inset 0 0 4px 2px {'#' + data.corso.colore}, 0 0 4px 2px {'#' +
 								data.corso.colore}; 
 						border: 1px solid {'#' + data.corso.colore}; background-color: {'#' + data.corso.colore}"
@@ -23,8 +25,10 @@
 		</div>
 		<div class="container-fluid mt-4 flex-grow-1">
 			<div class="row">
-				<div class="col-md-6 col-sm-12">
-					<p class="fs-4 fw-semibold">{data.corso.descrizione}</p>
+				<div class="col-md-12 col-sm-12">
+					<p class="fs-4 fw-semibold">
+						<PortableText value={data.corso.descrizione} />
+					</p>
 				</div>
 			</div>
 		</div>

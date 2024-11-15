@@ -1,10 +1,14 @@
 <script>
-	import ProjectDetails from './ProjectDetails.svelte';
 	import { urlFor, getVideoUrl } from '$lib/sanityClient';
 	const { project } = $props();
 
 	let videoElement = $state(null);
 	let showPlayButton = $state(true);
+
+	$effect(() => {
+		console.log(project);
+		showPlayButton = true;
+	});
 
 	function playVideo() {
 		if (videoElement) {
@@ -19,11 +23,6 @@
 </script>
 
 {#if project}
-	<!--<div class="container-fluid">
-		<div class="row">
-			<ProjectDetails {project} />
-		</div>
-	</div>-->
 	<div class="container-fluid mt-3">
 		<div class="row">
 			<div class="col-md-12">
@@ -34,9 +33,6 @@
 		</div>
 	</div>
 	<div class="container-fluid my-5">
-		<!-- 
-		<ProjectDetails {project} />
-		 -->
 		<div class="row">
 			<div class="col-md-3 offset-md-3 col-sm-12">
 				<div>
@@ -84,24 +80,32 @@
 			<div class="col-md-7 col-xs-12">
 				{#if project.video}
 					<div class="ratio ratio-16x9 position-relative">
-						<!-- svelte-ignore a11y_media_has_caption -->
-						<video bind:this={videoElement} onended={handleVideoEnded} controls>
-							<source src={getVideoUrl(project.video)} type="video/mp4" />
-							Your browser does not support the video tag.
-						</video>
-						{#if showPlayButton}
-							<div
-								class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+						{#key project.video}
+							<!-- svelte-ignore a11y_media_has_caption -->
+							<video
+								bind:this={videoElement}
+								onended={handleVideoEnded}
+								poster={urlFor(project?.immagini?.[3]).url()}
+								controls
 							>
-								<button
-									class="d-flex justify-content-center align-items-center bg-white rounded-circle border-0"
-									style="width: 80px; height: 80px;"
-									onclick={playVideo}
+								<source src={getVideoUrl(project.video)} type="video/mp4" />
+
+								Your browser does not support the video tag.
+							</video>
+							{#if showPlayButton}
+								<div
+									class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
 								>
-									<i class="bi bi-play-fill text-black fs-1"></i>
-								</button>
-							</div>
-						{/if}
+									<button
+										class="d-flex justify-content-center align-items-center bg-white rounded-circle border-0"
+										style="width: 80px; height: 80px;"
+										onclick={playVideo}
+									>
+										<i class="bi bi-play-fill text-black fs-1"></i>
+									</button>
+								</div>
+							{/if}
+						{/key}
 					</div>
 				{:else if project.immagini && project.immagini.length > 4}
 					<img

@@ -35,14 +35,15 @@ export function createSquareAtMouse(x, y) {
     square.style.pointerEvents = 'none'; // Ensure it doesn't interfere with other elements
     square.style.transition = 'all ' + ANIMATION_DURATION / 1000 + 's ease-out'; // Add transition for fading effect
     square.style.filter = 'blur(0px)';
+    //square.style.borderRadius = '40px';
     square.dataset.x = cellX; // Add data attributes to identify the square's position
     square.dataset.y = cellY;
 
     if (BORDER_ONLY) {
-        square.style.border = '3px solid rgba(0, 0, 255, 0.8)'; // Blue border with 80% opacity
+        square.style.border = '3px solid rgba(255, 255, 255, 0.8)'; // Blue border with 80% opacity
         square.style.backgroundColor = 'transparent'; // Transparent background
     } else {
-        square.style.backgroundColor = 'rgba(0, 0, 255, 0.8)'; // Use blue with 80% opacity
+        square.style.backgroundColor = 'rgba(255, 255, 255, 0.8)'; // Use blue with 80% opacity
     }
 
     // Add the square to the document
