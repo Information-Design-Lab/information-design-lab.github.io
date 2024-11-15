@@ -39,11 +39,11 @@
 		</div>
 	</div>
 	<div class="row my-4">
-		<div class="col-md-3 col-sm-12 mb-4 mt-2 sidebar order-sm-12">
-			<PortableText value={home.info} />
-		</div>
-		<div class="col-md-8 col-sm-12 home-main fw-semibold order-sm-1">
+		<div class="col-md-8 col-sm-12 home-main fw-semibold">
 			<PortableText value={remainingParagraphs} />
+		</div>
+		<div class="col-md-3 col-sm-12 mb-4 mt-2 sidebar">
+			<PortableText value={home.info} />
 		</div>
 	</div>
 </div>
