@@ -88,3 +88,17 @@ h1 {
 * {
     line-height: 120%;
 }
+
+@media only screen and (max-width: 600px) {
+    .fs-1 {
+        font-size: calc(1rem + 1.5vw) !important;
+    }
+
+    .home-main :global(p) {
+		font-size: calc(1rem + 1.5vw) !important;
+	}
+
+    .fs-big {
+		line-height: 120%;
+	}
+  }
