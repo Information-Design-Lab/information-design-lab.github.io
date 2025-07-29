@@ -2,7 +2,6 @@
 	import { base } from '$app/paths';
 	import { PortableText } from '@portabletext/svelte';
 	const { data } = $props();
-	$inspect(data);
 </script>
 
 <div class="flex-grow-1 d-flex flex-column justify-content-between">
