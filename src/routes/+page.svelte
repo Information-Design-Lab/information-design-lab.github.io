@@ -4,9 +4,11 @@
 	import { PortableText } from '@portabletext/svelte';
 
 	const page = $props();
-	const corsi = $derived(page.data.corsi);
+	const corsi = $derived(page.data.corsi.slice().sort((a, b) => b.anno - a.anno));
 	const home = $derived(page.data.home);
 	let firstContainer;
+
+	$inspect(corsi);
 
 	let firstParagraph = $derived([home.descrizione[0]]);
 	let remainingParagraphs = $derived(home.descrizione.slice(1));
